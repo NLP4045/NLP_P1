@@ -1,0 +1,7 @@
+bs4
+requests
+pandas
+nltk
+scikit-learn
+webdriver-manager
+selenium
