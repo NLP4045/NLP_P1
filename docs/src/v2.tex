@@ -96,7 +96,7 @@ frame=single
 
 \author{Lim Jun Hong}
 \affiliation{\institution{Nanyang Technological University}}
-\email{@e.ntu.edu.sg}
+\email{LIMJ0209@e.ntu.edu.sg}
 
 \author{Tammy}
 \affiliation{\institution{Nanyang Technological University}}
@@ -160,7 +160,7 @@ The 3 datasets chosen for analysis are from different domain specific Reddit for
 	\item {\verb|Programming|}: r/programming
 \end{itemize}
 
-\subsection{Tokenization}
+\subsection{Tokenization} 
 The NLTK function \textit{word\_tokenize()} was used to tokenize each comment. This function splits tokens based on white space and punctuation. Figure 1 shows the function being implemented in our code and Figure 2 shows the resulting tokens after running the tokenizer function on a single comment. \bigskip
 
 \renewcommand{\lstlistingname}{Figure}% Listing -> Algorithm
@@ -224,6 +224,32 @@ To ensure that the data used for plotting of token distribution would be meaning
         \includegraphics[scale=0.55]{ss2.png}
     \end{figure}
 The distribution graphs above shows that most tokens have 4 number of characters. Prior to stemming, the upper range for length is from 10 to 26 number of characters. After stemming, this upper range significantly decreased to 7 to 9 number of characters. This is due to the process of stemming reducing common token endings, which thus translates into a lower number of characters. 
+
+\subsection{Sentence Segmentation}
+The NLTK function \textit{sent\_tokenize()} uses an instance of \textit{PunktSentenceTokenizer} from the \textit{nltk.tokenize.punkt} module which has already been trained and knows very well where to mark the end and beginning of a sentence at what characters and punctuation. \smallskip
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[scale = 0.35]{sentence1.png}
+	\caption{Wallstreetbets}
+	\includegraphics[scale=0.35]{sentence2.png}
+	\caption{Mechanicalkeyboards}
+	\includegraphics[scale=0.35]{sentence3.png}
+	\caption{Programming}
+\end{figure}
+From the graph of 20 sentences being sampled from each domain, we can see the difference in the sentence length between the different domains. ‘Wallstreetbets’ is a community mainly focused on the U.S. stock market, ‘mechanicalkeyboards’ is a community where people would post images about their own mechanical keyboards or seek for recommendations of parts or mechanical keyboards to purchase and lastly, ‘programming’ is a community where programmers would be there to discuss about programming related question or the uses of different languages. \smallskip
+
+For ‘wallstreetbets’, the majority of the sentences are about 3-5 words long which is common in Reddit where people just leave comments about what they think. The comments usually reflect the reaction of a news article posted about the U.S. stock market thus the sentences aren’t that long. As compared to ‘mechanicalkeyboards’, the sentences are much longer, where people would be curious about the parts used in the mechanical keyboard posted or queries from commenters about the experience with the mechanical keyboard. ‘Programming’ in reddit has the widest range of sentence length in answer because of the nature of the subreddit. With more questions and elaborated answers, we can tell from Figure 2.3 that there are very long sentences as compared to ‘wallstreetbets’ and ‘mechanicalkeyboards’ causing a wide spectrum in length of the sentences.
+\subsection{Part-Of-Speech Tagging(POS Tagging)}
+The NLTK function \textit{nltk.pos\_tag()} takes a string and tags the words in the string to their respective POS tags. \textit{nltk.pos\_tag()} is a machine-learning tagger that has been well-trained by Microsoft and the model is saved for people to use. Since there are no perfect taggers around, there were definitely some errors made by the tagger especially when it comes to domain-specific terms.
+
+For ‘wallstreetbets’, from one of the randomly selected comments, ‘hexo’ was tagged as NN instead of NNP, a proper noun when it is a name for a U.S. stock, Hexo Corp. ‘gme’ was incorrectly tagged as NN instead of a proper noun because ‘gme’ meant GameStop Corp. in the context of ‘wallstreetbets’.
+
+For ‘mechanicalkeyboards’, there are words that are incorrectly tagged too. There are many different keyboard switches that are named by their brands. One of the comments had ‘alpaca/’, ‘tangerine’ and ‘switches’ tagged as adjective, noun, and plural nouns respectively when these 3 words are supposed to be tagged as a proper noun. Domain-specific words are not identified correctly due to the limitation of the NLTK library.
+
+For ‘programming’, there are still technical roles in the infocomm technology that are tagged incorrectly. ‘System admins’ are tagged separately by NLTK when it is a role in the office. Some commonly used programming terms such as ‘print’ and ‘i-o’ also known as input output are technical terms used in the programming syntax but are tagged as adjectives by NLTK.
+
+From the results of 3 different domains, we can see that NLTK POS tagging system is not perfect, however there is no perfect tagging system for all the domains. The results are as expected even though NLTK’s machine learning model is often being updated by the open-source community. If the POS Tagging system is not trained with the correct corpus or edited by the programmers, domain specific terms would highly likely be identified incorrectly.
 
 \section{Application: Search Engine}
 Based on the reviews collected in the previous section, A simple search
