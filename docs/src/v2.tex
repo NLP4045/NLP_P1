@@ -166,18 +166,23 @@ The NLTK function \textit{word\_tokenize()} was used to tokenize each comment. T
 \renewcommand{\lstlistingname}{Figure}% Listing -> Algorithm
 \renewcommand{\lstlistlistingname}{List of \lstlistingname s}% List of Listings -> List of Algorithms
 
-\begin{lstlisting}[caption={Implementation of tokenizer}, ,captionpos=b]
-    w = nltk.word_tokenize(comment.body)
-    wsb_words.extend(w)
-    count+=1
-    print("Comment:", comment.body)
-\end{lstlisting}
+\begin{figure}[H]
+	\begin{lstlisting}[gobble=10]
+	    w = nltk.word_tokenize(comment.body)
+	    wsb_words.extend(w)
+	    count+=1
+	    print("Comment:", comment.body)
+	\end{lstlisting}
+	\caption{Implementation of Tokenizer}
+\end{figure}
 
-
-\begin{lstlisting}[caption={Result of tokenizer}, ,captionpos=b]
-    Comment: Tesla calls!
-    Token results: ['Tesla', 'calls', '!']
-\end{lstlisting}
+\begin{figure}[H]
+	\begin{lstlisting}[gobble=10]
+	    Comment: Tesla calls!
+	    Token results: ['Tesla', 'calls', '!']
+	\end{lstlisting}
+	\caption{Result of Tokenizer}
+\end{figure}
 
 \subsection{Evaluation of tokenizer results}
 The tokenizer was successful in tokenizing most data in the chosen dataset. However, upon manual inspection of each tokenized result, we found some incorrect tokens as shown in Table~\ref{tab:token}. The incorrect tokens were mainly due to domain specific issues. For instance, in r/programming, the tokenizer incorrectly tokenized a line of code and separated the code into three tokens instead of one. Another common error is due to the separation of domain specific terminologies such as investment terms like “options flow” and names of mechanical switches like “Holy Pandas”.
@@ -217,13 +222,18 @@ Regular expressions could also be used to ensure sequences such as money express
 After getting the word tokens for each comment, the NLTK function porterStemmer() is used to reduce each word token to its root or base by removing common morphological and inflexional token endings.
 
 To ensure that the data used for plotting of token distribution would be meaningful, we added a list of stop words which are words that do not contribute to a deeper meaning for the analysis. Such words include common punctuations such as commas and fullstops. \linebreak
+\begin{figure}
+	\centering
+	\includegraphics[scale=0.55]{ss1.png}
+	\caption{Token length before stemming}
+\end{figure}
 
-\includegraphics[scale=0.55]{ss1.png}
 
-    \begin{figure}[H]
-        \centering
-        \includegraphics[scale=0.55]{ss2.png}
-    \end{figure}
+\begin{figure}[H]
+    \centering
+    \includegraphics[scale=0.55]{ss2.png}
+   	\caption{Token length after stemming}
+\end{figure}
 The distribution graphs above shows that most tokens have 4 number of characters. Prior to stemming, the upper range for length is from 10 to 26 number of characters. After stemming, this upper range significantly decreased to 7 to 9 number of characters. This is due to the process of stemming reducing common token endings, which thus translates into a lower number of characters. 
 
 \subsection{Sentence Segmentation}
@@ -233,8 +243,14 @@ The NLTK function \textit{sent\_tokenize()} uses an instance of \textit{PunktSen
 	\centering
 	\includegraphics[scale = 0.35]{sentence1.png}
 	\caption{Wallstreetbets}
+\end{figure}
+\begin{figure}[H]
+	\centering
 	\includegraphics[scale=0.35]{sentence2.png}
 	\caption{Mechanicalkeyboards}
+\end{figure}
+\begin{figure}[H]
+	\centering
 	\includegraphics[scale=0.35]{sentence3.png}
 	\caption{Programming}
 \end{figure}
