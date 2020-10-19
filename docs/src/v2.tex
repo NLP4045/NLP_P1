@@ -180,20 +180,21 @@ The NLTK function \textit{word\_tokenize()} was used to tokenize each comment. T
 \end{lstlisting}
 
 \subsection{Evaluation of tokenizer results}
-The tokenizer was successful in tokenizing most data in the chosen dataset. However, upon manual inspection of each tokenized result, we found some incorrect tokens as shown in Table 1. The incorrect tokens were mainly due to domain specific issues. For instance, in r/programming, the tokenizer incorrectly tokenized a line of code and separated the code into three tokens instead of one. Another common error is due to the separation of domain specific terminologies such as investment terms like “options flow” and names of mechanical switches like “Holy Pandas”.
+The tokenizer was successful in tokenizing most data in the chosen dataset. However, upon manual inspection of each tokenized result, we found some incorrect tokens as shown in Table~\ref{tab:token}. The incorrect tokens were mainly due to domain specific issues. For instance, in r/programming, the tokenizer incorrectly tokenized a line of code and separated the code into three tokens instead of one. Another common error is due to the separation of domain specific terminologies such as investment terms like “options flow” and names of mechanical switches like “Holy Pandas”.
 
 \begin{table}[h]
-\begin{tabular}{|l|l|}
-\hline
- {\bf Expected Token} &  {\bf Actual token} \\ \hline
- “Martin Luther King”& “Martin”, ”Luther”, ”King”  \\ \hline
- “Options flow” &  “Options”,”flow” \\ \hline
- “Holy Pandas”& “Holy”, ”Pandas” \\ \hline
-“:)” &  “:”, “)”\\ \hline
- “System.nanoTime()”& “System.nanoTime”, “(“,”)” \\ \hline
-“String Buffer:”, “1 ms”  &  “String Buffer:1”, “ms”\\ \hline
-\end{tabular}
-\caption{\label{tab:Table 1:}Incorrectly identified tokens}
+	\begin{tabular}{|l|l|}
+	\hline
+	 {\bf Expected Token} &  {\bf Actual token} \\ \hline
+	 “Martin Luther King”& “Martin”, ”Luther”, ”King”  \\ \hline
+	 “Options flow” &  “Options”,”flow” \\ \hline
+	 “Holy Pandas”& “Holy”, ”Pandas” \\ \hline
+	“:)” &  “:”, “)”\\ \hline
+	 “System.nanoTime()”& “System.nanoTime”, “(“,”)” \\ \hline
+	“String Buffer:”, “1 ms”  &  “String Buffer:1”, “ms”\\ \hline
+	\end{tabular}
+	\caption{Incorrectly identified tokens}
+	\label{tab:token}
 \end{table}
 
 
@@ -353,8 +354,6 @@ between two vectors. As search queries are short in nature, it is able to retrie
 documents which share similar components to the query vector.
 
 \begin{table}
-	\caption{Example Vocabulary}
-	\label{tab:vocab}
 	\begin{tabular}{ccl}
 		\toprule
 		Word Id&Word\\
@@ -364,9 +363,12 @@ documents which share similar components to the query vector.
 		2 & orange\\
 		\bottomrule
 	\end{tabular}
+	\caption{Example Vocabulary}
+	\label{tab:vocab}
 \end{table}
 
-\subsection{Examples}
+\subsection{Application Demo}
+A sample run of the application is shown below:
 \begin{verbatim}
 Reviews 1 to 5 (out of 167) for search query 
 "Fountain light show"
