@@ -29,6 +29,16 @@
 \usepackage{caption}% Better control over caption
 \usepackage{lipsum}% Example text
 \usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{adjustbox}
+\hypersetup{
+	colorlinks=true,
+	linkcolor=blue,
+	filecolor=magenta,      
+	urlcolor=cyan,
+}
+
+
 \pagecolor{white}
 \lstset{
 basicstyle=\ttfamily,
@@ -98,13 +108,13 @@ frame=single
 \affiliation{\institution{Nanyang Technological University}}
 \email{LIMJ0209@e.ntu.edu.sg}
 
-\author{Tammy}
+\author{Tammy Lim Lee Xin}
 \affiliation{\institution{Nanyang Technological University}}
-\email{tlim045@e.ntu.edu.sg}
+\email{TLIM045@e.ntu.edu.sg}
 
-\author{Delphine}
+\author{Lee Han Wei}
 \affiliation{\institution{Nanyang Technological University}}
-\email{@e.ntu.edu.sg}
+\email{B160017@e.ntu.edu.sg}
 
 \author{Pang Yu Shao}
 \affiliation{\institution{Nanyang Technological University}}
@@ -130,7 +140,7 @@ frame=single
 %%
 %% Keywords. The author(s) should pick words that accurately describe
 %% the work being presented. Separate the keywords with commas.
-\keywords{NLP, Text Tagging, Information Retreival}
+%% \keywords{NLP, Text Tagging, Information Retreival}
 
 %% A "teaser" image appears between the author and affiliation
 %% information and the body of the document, and typically spans the
@@ -150,7 +160,11 @@ frame=single
 \maketitle
 
 \section{Introduction}
-TODO:
+In this assignment, we first perform domain specific data analysis by comparing the effectiveness of applying the various NLP processes (e.g. Tokenizing, Stemming, Segmentation, POS Tagging) to texts belonging in different domains. 
+
+Next, using a separate dataset of reviews of a product/service, we identify <Noun-Adjective> pairs manually and programmatically and rank them. The results of the ranking produced by ourselves and the program is then compared and analysed. 
+
+Lastly, using the same dataset of reviews, a NLP application is developed. The implementation of all tasks will be discussed in detail in the following sections.
 
 \section{Domain Specific Dataset Analysis}
 The 3 datasets chosen for analysis are from different domain specific Reddit forums:
@@ -268,8 +282,80 @@ For ‘programming’, there are still technical roles in the infocomm technolog
 
 From the results of 3 different domains, we can see that NLTK POS tagging system is not perfect, however there is no perfect tagging system for all the domains. The results are as expected even though NLTK’s machine learning model is often being updated by the open-source community. If the POS Tagging system is not trained with the correct corpus or edited by the programmers, domain specific terms would highly likely be identified incorrectly.
 
+\section{Development of a <Noun - Adjective> Pair Ranker}
+In this section, a <Noun-Adjective> pair ranker is developed to identify the top 5 meaningful pairs. 
+
+First, the top 5 meaningful pairs is identified manually and then a ranker will be implemented using Python to do it programmatically. 
+
+Next, the differences between the results of the manually identified pairs as well as those returned by the program is compared. 
+
+Lastly, the potential challenges that may be encountered during the language processing process is discussed.
+
+\subsection{Methodology and Tools}
+The <Noun-Adjective> pairs are ranked in accordance to their \textbf{Occurrence Count} (i.e., a pair with the most occurrences will be the top ranked pair).
+
+\subsubsection{Manual Identification}
+Manual Identification is done based on the user's knowledge of vocabulary as well as the user's interpretation. The user will classify the pairs according to the definition after two words are paired with one another. There is a possibility whereby different word pairs might convey similar meanings (e.g., tall waterfall, highest waterfall, etc.).
+\subsubsection{Python-based NLP Library}
+The library \verb|SpaCy| is chosen for the implementation of the <Noun - Adjective> pair ranking program as \verb|SpaCy| is one of the newer libraries implemented in Python for NLP tasks as compared to older libraries such as \verb|NLTK|. It also has performance benefits as it uses latest algorithms for tasks such as syntax parsing, making it faster than \verb|NLTK| for many text processing tasks.
+
+\subsection{Dataset}
+\label{subsection:dataset}
+The dataset used for this task as well as for the NLP application developed in Section \ref{section:label} is the collection of reviews of \textbf{Jewel Changi Airport} on \href{https://www.tripadvisor.com.sg/Attraction_Review-g294265-d17237163-Reviews-Jewel_Changi_Airport-Singapore.html}{Tripadvisor}
+
+A web-scraper was developed to scrape the reviews which is then stored locally as a .csv file which can be easily read by the implemented programs.
+
+\subsection{Results}
+\subsubsection{Manually Identified Pairs Ranking}
+By identifying the <Noun-Adjectives> pairs manually, the following results are obtained:
+\begin{table}[H]
+	\label{tab:manualpairs}
+	\begin{adjustbox}{width=\columnwidth}
+	\begin{tabular}{ccc}
+		\toprule
+		Noun&Adjective&Occurrence Count\\
+		\midrule
+		waterfall & amazing/great/marvelous/spectacular & 6 \\
+		waterfall & tallest/biggest & 4 \\
+		place & amazing/good/extraordinary & 4 \\
+		airport & beautiful & 2 \\
+		airport & amazing/impressive & 2 \\
+		\bottomrule
+	\end{tabular}
+	\end{adjustbox}
+	\caption{Top 5 <Noun-Adjective> Pairs Identified Manually}
+\end{table}
+
+
+\subsubsection{Programmatically Identified Pairs Ranking}
+By using the implemented Python script to identify the <Noun-Adjectives> pairs, the following results are obtained:
+\begin{table}[H]
+	\label{tab:progpairs}
+	\begin{tabular}{ccc}
+		\toprule
+		Noun&Adjective&Occurrence Count\\
+		\midrule
+		waterfall & indoor & 6 \\
+		floor & top & 2 \\
+		place & amazing & 2 \\
+		level & new & 2 \\
+		level & top & 2 \\
+		\bottomrule
+	\end{tabular}
+	\caption{Top 5 <Noun-Adjective> Pairs Identified by Program}
+\end{table}
+
+\subsection{Analysis}
+We identified that the output from the SpaCy text processing does not accurately reflect how the users think about the Jewel airport. \textbf{4} out of \textbf{5} <noun> – <adjective> pairs  (indoor waterfall, top floor, new level and top level) are referring to an object without further clarification of how the users view it.  One of the main challenges in this exercise was POS tagging as a word can have multiple tags. At the same time, different word combinations can imply the same meaning and the library is unable to group them together.
+
+Among the manually extracted <noun> – <adjective> pairs, the noun <waterwall> is the most common and users often describe it as <waterfall>- <biggest>. The other common nouns are <place> and <airport> where the users often describe it with different adjectives of similar meaning. Having a manual categorization helps to gather similar terms under one umbrella instead of separating the counts.
+
+A possible improvement to the implemented program is to use a \textbf{thesaurus} to group "similar" words into a single category, this would then be able overcome the previously identified problem where the program would classify these similar pairs as separate counts rather than counting them together. However, it is worth noting that the thesaurus is also limited by the corpus which it is developed upon. In specialized domains, a generic thesaurus might not be sufficient and for those instances human intervention might still be necessary.
+
+
 \section{Application: Search Engine}
-Based on the reviews collected in the previous section, A simple search
+\label{section:label}
+Based on the reviews collected in section \ref{subsection:dataset}, A simple search
 engine is developed which allows the user to search for related reviews
 based on the user's input.
 
@@ -382,7 +468,7 @@ documents which share similar components to the query vector.
 	\caption{Example Vocabulary}
 	\label{tab:vocab}
 \end{table}
-
+\pagebreak
 \subsection{Application Demo}
 A sample run of the application is shown below:
 \begin{verbatim}
@@ -405,7 +491,21 @@ not great but colored waterfall is impressive. A must see.
 . . .
 \end{verbatim}
 
+\section{Conclusion}
+In this assignment, we have successfully implemented various NLP processes that has been taught to us in the first-half of the course such as
+\begin{itemize}
+	\item Tokenization
+	\item Stemming
+	\item Sentence Segmentation
+	\item POS Tagging
+\end{itemize}
+The effectiveness of these algorithms on specialized texts has also been explored and evaluated.
 
+In the second section, we have also performed analysis of <Noun-Adjective> pairs on a \textbf{"practical"} dataset of reviews on Jewel Changi Airport and discussed the limitations of the NLP algorithms and instances where human intervention or interpretation of data might still be necessary. 
+
+Lastly, we have implemented a NLP application in the form of a search engine which allows a user of the application to search for related reviews based on a query. The implementation considerations such as representation of the reviews/queries as well as the choice of similarity measure to be used when ranking reviews have been discussed as well.
+
+After this assignment, we have a better appreciation of the various NLP techniques that were taught after being able to apply it in a practical manner as well as more familiarity with the various high-level Python libraries available which provides implementations of the various algorithms for NLP tasks.
 
 %% COMMENTED OUT THE BOTTOM PART TO PREVENT IT FROM COMPILING FOR NOW
 \iffalse
