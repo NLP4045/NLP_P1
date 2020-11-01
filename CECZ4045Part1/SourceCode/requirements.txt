@@ -1,6 +1,8 @@
+jupyterlab
 pandas
 nltk
 scikit-learn
 matplotlib
 seaborn
 praw
+spacy
