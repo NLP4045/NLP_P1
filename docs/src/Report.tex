@@ -31,6 +31,14 @@
 \usepackage{xcolor}
 \usepackage{hyperref}
 \usepackage{adjustbox}
+\usepackage{afterpage}
+
+\newcommand\blankpage{%
+	\null
+	\thispagestyle{empty}%
+	\addtocounter{page}{-1}%
+	\newpage}
+
 \hypersetup{
 	colorlinks=true,
 	linkcolor=blue,
@@ -91,6 +99,49 @@ frame=single
 %%
 %% end of the preamble, start of the body of the document source.
 \begin{document}
+	
+\begin{titlepage}
+	\begin{center}
+		\vspace*{1cm}
+		\includegraphics[width=0.4\textwidth]{ntu_logo}
+		\vspace{0.8cm}
+		\linebreak
+		\Huge
+		\textbf{Domain Specific Text Data Analysis and Processing}
+		
+		\vspace{0.5cm}
+		\LARGE
+		CE/CZ4045 Natural Language Processing
+		
+		\vspace{1.5cm}
+		\textbf{Contributions:}\\
+		
+		\begin{table}[h]
+			\begin{tabular}{lc}
+				Lee Han Wei &\textbf{ 25\%}\\
+				Lim Jun Hong & \textbf{25\%}\\
+				Pang Yu Shao & \textbf{25\%}\\
+				Tammy Lim Lee Xin & \textbf{25\%}\\
+			\end{tabular}
+		\end{table}
+		
+
+		
+		\vfill
+
+		\vspace{0.8cm}
+		
+
+		
+		\Large
+		SCHOOL OF COMPUTER SCIENCE AND ENGINEERING\\
+		NANYANG TECHNOLOGICAL UNIVERSITY\\
+		SINGAPORE\\
+		1st November 2020
+		
+	\end{center}
+\end{titlepage}
+\afterpage{\blankpage}
 
 %%
 %% The "title" command has an optional parameter,
